@@ -1,0 +1,61 @@
+Describe the MVP of your project, and how it works?
+
+This will be a media tracker where you share movies with your friends.
+MVP:
+  Users, Movies, Comments, Favorites tables
+  Users will be able to "favorite" and "comment" on movies
+  Users will be able to "add", "update", and "delete" movies
+  Movies will have a "details" page where details are more easily visible
+  Users will have access to a "favorites" page which desplays an idividual user's "favorited" movies
+
+Project Backlog:
+  Additional media tables (TV Shows, Books, etc.)
+  Users will have an "account" page where user details can be viewed and edited
+
+Which stack are you using?
+
+Python
+
+What will be included in your gitignore?
+
+Default from github
+
+Github project link:
+
+https://github.com/Epicharmus/projectsandalgos_group_project
+
+What will the user do to perform CRUD on a non-user table?
+
+Create, view, update, and delete movies
+Create and view comments
+
+How do you intend to implement styling/CSS?
+
+Bootstrap, potentially some CSS
+
+What validations will you use for CRUD?
+
+Media:
+  Min lengths
+  No start/end blanks
+
+Validations for login/registration?
+
+Registration:
+  Unique user email
+  Min lengths for: username, password
+  No blanks for: username, password, email
+  Regex for: email
+
+Login:
+  User exists
+  Credentials match
+
+Please describe what a protected route is; show an example if you have one.
+Which routes will be protected?
+
+Protected route is one that's only accessible when a user is logged in. Anything that is not the registration page will be protected 
+
+Describe your intended one to many relationship.
+
+The users will have many movies and/or tv shows. There will be comments on the media.
