@@ -16,12 +16,12 @@ class Movie:
 
     # model the class after the movie table from our database
 
-    my_db = "media_tracker.movie"
+    my_db = "media_tracker_schema"
 
     def __init__(self, data):
         self.id = data["id"]
         self.movie_title = data["movie_title"]
-        self.release_year = data["release_year"]
+        self.release_date = data["release_date"]
         self.description = data["description"]
         self.likes = data["likes"]
         self.created_at = data["created_at"]
@@ -33,15 +33,15 @@ class Movie:
     def create(cls, data):
         query = """
         INSERT INTO movie
-        (movie_title,release_year,description,likes,owner_id)
-        VALUES (%(movie_title)s,%(release_year)s,%(description)s,%(likes)s,%(owner_id)s);
+        (movie_title,release_date,description,likes,owner_id)
+        VALUES (%(movie_title)s,%(release_date)s,%(description)s,%(likes)s,%(owner_id)s);
 
         """
         # data = data.copy()
         # data["owner_id"] = session["owner_id"]
 
         # this line returns the id of the new user.
-        return connectToMySQL("media_tracker").query_db(query, data)
+        return connectToMySQL("media_tracker_schema").query_db(query, data)
 
     @classmethod
     def get_all(cls):
