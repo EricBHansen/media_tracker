@@ -1,1 +1,0 @@
-SELECT * FROM media_tracker.movie;
