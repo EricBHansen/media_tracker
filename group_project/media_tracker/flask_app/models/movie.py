@@ -100,16 +100,15 @@ class Movie:
     @classmethod
     def update(cls, movie_data):
         query = """
-        UPDATE movie
+        UPDATE movies
         SET 
-        movie_title=%(movie_title)s,
-        release_year=%(release_year)s,
-        description=%(description)s,
-        likes=%(likes)s,
-        WHERE id =%(movie_id)s;
+        title=%(title)s,
+        release_date=%(details)s,
+        details=%(description)s,
+        WHERE id =%(id)s;
         """
 
-        movie = connectToMySQL(Movie.my_db).query_db(query, movie_data)
+        movie = connectToMySQL(cls.my_db).query_db(query, movie_data)
         print(movie)
         return movie
 
