@@ -32,7 +32,7 @@ def add_movie():
         return redirect("/add_movie")
     data = {
         "title": request.form["title"],
-        "release_year": request.form["release_date"],
+        "release_date": request.form["release_date"],
         "director": request.form["director"],
         "details": request.form["details"],
         "owner_id": session["user_id"],
@@ -46,8 +46,9 @@ def update(movie_id):
     if not "user_id" in session:
         flash("Please log in or register")
         return redirect("/")
+    movie=Movie.get_by_id(movie_id)
 
-    return render_template("edit.html", movie=Movie.get_by_id(movie_id))
+    return render_template("update_movie.html", movie=movie)
 
 
 @app.route("/movie/show_movie/<int:movie_id>")
@@ -119,7 +120,7 @@ def update_edit(movie_id):
     }
     Movie.update(data)
     print(request.form)
-    return redirect("/dashboard")
+    return redirect("/dash")
 
 
 @app.route("/movie/delete/<int:movie_id>")
@@ -128,4 +129,4 @@ def delete(movie_id):
         return redirect("/")
     Movie.delete(movie_id)
 
-    return redirect("/dashboard")
+    return redirect("/dash")

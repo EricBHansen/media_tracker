@@ -4,7 +4,7 @@ import re
 from flask_bcrypt import Bcrypt
 from flask_app.models import movie
 from flask_app.models import user
-from flask_app.models import favorites
+from flask_app.models import favorite
 
 
 EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$")

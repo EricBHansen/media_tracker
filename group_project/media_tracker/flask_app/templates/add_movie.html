@@ -25,14 +25,54 @@
         </nav>
         <!-- main content container -->
          <div>
-            <div>
+            <div class="text-center">
                 <h1>Add a movie on this page, {{user.first_name}} {{user.last_name}}</h1>
              </div>
             <!-- movie form -->
              <div>
-                <h1>Insert form Here</h1>
-             </div>
-         </div>
+                 <div class="card mx-auto m-3" style="width: 75%; min-width: 20rem;">
+                    <img src="https://svgsilh.com/svg/331553.svg" class="card-img-top" alt="film_strip">
+                    <div class="container text-center p-3">
+                        <ul>
+                        {% with messages = get_flashed_messages(category_filter=["add_movie"]) %}
+                            {% if messages %}
+                                {% for message in messages %}
+                        <div class="alert alert-danger alert-dismissible fade show mx-auto" role="alert">
+                            <li>{{ message }}</li>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                        </ul>
+                        <form action="/process_movie" method="POST">
+                            <input type="hidden" value="{{user.id}}" name="owner_id" id="owner_id">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="title" name="title">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Release Date:</label>
+                                <input type="date" id="release_date" class= "form-control" name="release_date">
+                            </div>
+            
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Director</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="director" name="director">
+                            </div>
+            
+                            <div class="input-group">
+                                <span class="input-group-text">Details:</span>
+                                <textarea class="form-control" aria-label="With textarea" name="details" id="details"></textarea>
+                            </div>
+            
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form> 
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

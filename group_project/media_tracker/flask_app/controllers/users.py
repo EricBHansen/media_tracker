@@ -1,6 +1,7 @@
 # User controller goes here
 from flask_app import app
 from flask_app.models.user import User
+from flask_app.models.movie import Movie
 from flask_app import bcrypt
 from flask import render_template, redirect, request, session, flash
 
@@ -60,5 +61,6 @@ def success():
     
     user=User.get_by_id(session["user_id"])
     users=User.get_all()
+    movies=Movie.get_all()
 
-    return render_template('success.html', user=user, users=users)
+    return render_template('success.html', user=user, users=users, movies=movies)
