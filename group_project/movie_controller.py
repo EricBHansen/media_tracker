@@ -9,45 +9,61 @@ from flask import (
 
 from flask_app.models.movie import Movie
 from flask_app.models.user import User
-#from flask_app.models.comment import Comments
-#from flask_app.models.favorite import Favorites
 
+from flask_bcrypt import Bcrypt
+from flask import flash
 
 # session["id_user"] = user_in_db.id
 # dashboard for /movie = belt exam
 
-@app.route("/add_movie")
-def movie_form():
-    user = User.get_by_id(session["user_id"])
-    
-    return render_template("add_movie.html", user=user)
 
-@app.post("/process_movie")
-def add_movie():
-    if not "user_id" in session:
-        flash("try again")
+@app.route("/dashboard")
+def dashboard():
+    # get_all method
+    if "user_id" not in session:
         return redirect("/")
+    # user = User.get_by_id("user_id")
+    query_results = Movie.get_all()
+    # call the Movie class
 
-    if not Movie.is_valid(request.form):
-        return redirect("/add_movie")
-    data = {
-        "title": request.form["title"],
-        "release_date": request.form["release_date"],
-        "director": request.form["director"],
-        "details": request.form["details"],
-        "owner_id": session["user_id"],
-    }
-    Movie.create(data)
-    return redirect("/dash")
+    return render_template("dashboard.html", all_movies=query_results)
+
+
+@app.route("/create")
+def create():
+
+    return render_template("add_movie.html")
 
 
 @app.route("/update/<int:movie_id>")
 def update(movie_id):
     if not "user_id" in session:
-        flash("Please log in or register")
+        flash("try again")
         return redirect("/")
 
     return render_template("edit.html", movie=Movie.get_by_id(movie_id))
+
+
+@app.route("/add_movie", methods=["POST"])
+def add_movie():
+    print("WE ARE HERE!")
+    print(request.form)
+    if not "user_id" in session:
+        flash("try again")
+        return redirect("/")
+    if not Movie.is_valid(request.form):
+        print("WE ARE DEFINITELY HERE!")
+
+        return redirect("/create")
+    data = {
+        "movie_title": request.form["movie_title"],
+        "release_year": request.form["release_year"],
+        "description": request.form["description"],
+        "user_id": session["user_id"],
+    }
+    Movie.create(data)
+    print(request.form)
+    return redirect("/dashboard")
 
 
 @app.route("/movie/show_movie/<int:movie_id>")
