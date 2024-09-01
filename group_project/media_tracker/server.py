@@ -1,5 +1,5 @@
 from flask_app import app
-from flask_app.controllers import users, movies
+from flask_app.controllers import users, movies, favorites, comments
 
 # need to import: movies, favorites from flask_app.controllers
 

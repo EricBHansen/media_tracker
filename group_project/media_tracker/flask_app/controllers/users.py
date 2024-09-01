@@ -29,7 +29,7 @@ def create():
     }
     user_id = User.save(data)
     session["user_id"] = user_id
-    return redirect('/success')
+    return redirect('/dash')
 
 @app.post('/login')
 def login():

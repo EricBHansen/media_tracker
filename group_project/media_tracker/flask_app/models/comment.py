@@ -17,7 +17,7 @@ class Comments:
 
     # model the class after the comments table from our database
 
-    my_db = "media_tracker.comments"
+    my_db = "media_tracker_schema"
 
     def __init__(self, data):
         self.id = data["id"]

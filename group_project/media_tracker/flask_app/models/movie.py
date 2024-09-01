@@ -60,10 +60,10 @@ class Movie:
     def join_tables_for_one_id(cls, movie_id):
         query = """
         SELECT *
-        FROM movie
+        FROM movies
         JOIN users
-        ON users.id = movie.owner_id
-        WHERE movie.id=%(id)s;
+        ON users.id = movies.owner_id
+        WHERE movies.id=%(id)s;
         """
         data = {"id": movie_id}
         results = connectToMySQL(Movie.my_db).query_db(query, data)
@@ -86,7 +86,7 @@ class Movie:
     def get_by_id(cls, data_id):
         query = """
         SELECT *
-        FROM movie
+        FROM movies
         WHERE id = %(movie_id)s;
         """
         data = {"movie_id": data_id}
@@ -100,7 +100,7 @@ class Movie:
     @classmethod
     def update(cls, movie_data):
         query = """
-        UPDATE movie
+        UPDATE movies
         SET 
         movie_title=%(movie_title)s,
         release_year=%(release_year)s,
