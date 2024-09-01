@@ -102,10 +102,10 @@ class Movie:
         query = """
         UPDATE movies
         SET 
-        movie_title=%(movie_title)s,
-        release_year=%(release_year)s,
-        description=%(description)s,
-        likes=%(likes)s,
+        title=%(title)s,
+        release_date=%(release_date)s,
+        director=%(director)s,
+        details=%(details)s
         WHERE id =%(movie_id)s;
         """
 

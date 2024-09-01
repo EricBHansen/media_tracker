@@ -47,8 +47,9 @@ def update(movie_id):
         flash("Please log in or register")
         return redirect("/")
     movie=Movie.get_by_id(movie_id)
+    user = User.get_by_id(session["user_id"])
 
-    return render_template("update_movie.html", movie=movie)
+    return render_template("update_movie.html", movie=movie, user=user)
 
 
 @app.route("/movie/show_movie/<int:movie_id>")
@@ -86,10 +87,11 @@ def edit(movie_id):
     if Movie.is_valid(request.form):
         flash("Updated!")
         data = {
-            "movie_title": request.form["movie_title"],
-            "release_year": request.form["release_year"],
-            "description": request.form["description"],
-            "movie_id": movie_id,
+            "title": request.form["title"],
+            "release_date": request.form["release_date"],
+            "director": request.form["director"],
+            "details": request.form["details"],
+            "id": movie_id,
             "user_id": session["user_id"],
         }
         Movie.update(data)
@@ -112,9 +114,10 @@ def update_edit(movie_id):
     if Movie.is_valid(request.form):
         flash("Updated!")
     data = {
-        "movie_title": request.form["movie_title"],
-        "release_year": request.form["release_year"],
-        "description": request.form["description"],
+        "title": request.form["title"],
+        "release_date": request.form["release_date"],
+        "director": request.form["director"],
+        "details": request.form["details"],
         "id": movie_id,
         "user_id": session["user_id"],
     }
