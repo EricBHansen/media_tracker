@@ -101,6 +101,7 @@ class Movie:
     def update(cls, movie_data):
         query = """
         UPDATE movies
+        UPDATE movies
         SET 
         title=%(title)s,
         release_date=%(release_date)s,
@@ -109,7 +110,7 @@ class Movie:
         WHERE id =%(movie_id)s;
         """
 
-        movie = connectToMySQL(Movie.my_db).query_db(query, movie_data)
+        movie = connectToMySQL(cls.my_db).query_db(query, movie_data)
         print(movie)
         return movie
 
