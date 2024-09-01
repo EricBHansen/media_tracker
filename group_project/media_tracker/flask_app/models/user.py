@@ -52,14 +52,17 @@ class User:
         return user
 
     @classmethod
-    def get_all(cls, data):
+    def get_all(cls):
         query = """
         SELECT *
-        FROM users
-         (first_name,last_name,email,password);
+        FROM users;
 
         """
-        return connectToMySQL(cls.my_db).query_db(query, data)
+        results=connectToMySQL(cls.my_db).query_db(query)
+        users=[]
+        for user in results:
+            users.append(cls(user))
+        return users
 
     @classmethod
     def get_by_id(cls, user_id):
