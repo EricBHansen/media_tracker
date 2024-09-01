@@ -101,7 +101,6 @@ class Movie:
     def update(cls, movie_data):
         query = """
         UPDATE movies
-        UPDATE movies
         SET 
         title=%(title)s,
         release_date=%(release_date)s,
