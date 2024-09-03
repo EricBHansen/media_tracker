@@ -42,7 +42,7 @@
                         <li class="list-group-item">
                             <div class="card text-center" style="width: 18rem;">
                                 <div class="card-body">
-                                    <h5 class="card-title"><strong>{{movie.title}}</strong></h5>
+                                    <h5 class="card-title"><strong><a href="/movie/show_movie/{{movie.id}}">{{movie.title}}</a></strong></h5>
                                     <h6 class="card-subtitle mb-2 text-body-secondary">Directed by: <em>{{movie.director}}</em></h6>
                                     <p class="card-text">Released on: <em>{{movie.release_date}}</em></p>
                                     {% if movie.owner_id == session.user_id %}
