@@ -106,7 +106,7 @@ class Movie:
         release_date=%(release_date)s,
         director=%(director)s,
         details=%(details)s
-        WHERE id =%(movie_id)s;
+        WHERE id =%(id)s;
         """
 
         movie = connectToMySQL(cls.my_db).query_db(query, movie_data)
