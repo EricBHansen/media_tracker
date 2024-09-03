@@ -14,7 +14,7 @@ EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$")
 # model the class after the favorites table from our database
 class Favorites:
 
-    my_db = "media_tracker.favorites"
+    my_db = "media_tracker_schema"
 
     def __init__(self, data):
         self.id = data["id"]
