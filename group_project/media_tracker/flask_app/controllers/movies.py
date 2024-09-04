@@ -9,7 +9,7 @@ from flask import (
 
 from flask_app.models.movie import Movie
 from flask_app.models.user import User
-#from flask_app.models.comment import Comments
+from flask_app.models.comment import Comments
 #from flask_app.models.favorite import Favorites
 
 
@@ -56,10 +56,13 @@ def details_movie(movie_id):
     if not "user_id" in session:
         flash("Go register first")
         return redirect("/")
+    user = User.get_by_id(session["user_id"])
 
     movie = Movie.get_by_id(movie_id)
 
-    return render_template("details_movie.html", movie=movie)
+    # comments = Comments.get_comments_by_movie(movie_id)
+
+    return render_template("details_movies.html", user=user, movie=movie)
 
 @app.route("/movie/edit/<int:movie_id>", methods=["POST"])
 def edit(movie_id):

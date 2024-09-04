@@ -48,8 +48,15 @@
                 <h4 class="text-start">{{movie.details}}</h4>
             </div>
             <div class="card-footer text-start">
-                <p>Add a Comment</p>
-                <p>{{user.first_name}} {{user.last_name}}</p>
+                <h4>Comments</h4>
+                <form class="form-horizontal" action="/comment/add" method="post">
+                    <input type="hidden" value="{{movie.id}}" name="movie_id" id="movie_id">
+                    <div class="form-group">
+                        <label class="control-label m-1" for="comment"></label>
+                        <textarea class="form-control" aria-label="With textarea" name="comment" id="comment" placeholder="Add a comment"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
         </div>
     </div>
