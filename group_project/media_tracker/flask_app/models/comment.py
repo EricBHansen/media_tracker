@@ -40,28 +40,28 @@ class Comments:
         # this line returns the id of the new user.
         return connectToMySQL(cls.my_db).query_db(query, data)
 
-    # @classmethod
-    # def get_comments_by_movie(cls, data):
-    #     query = """
-    #     SELECT * 
-    #     FROM movie_comments
-    #     WHERE id = %(movie_id)s;
-    #     """
-    #     results = connectToMySQL(cls.my_db).query_db(query, data)
-    #     comments = []
-    #     for row in results:
-    #         one_movie = cls(row)
-    #         one__movie_comments = {
-    #             "id": row['id'],
-    #             "users_id": row['users_id'],
-    #             "movie_id": row['movie_id'],
-    #             "comment": row['comment'],
-    #             "created_at": row['created_at']
-    #         }
-    #         remark = comment.Comments(one__movie_comments)
-    #         one_movie.remark = remark
-    #         comments.append(one_movie)
-    #     return comments
+    @classmethod
+    def get_comments_by_movie(cls, data):
+        query = """
+        SELECT * 
+        FROM movie_comments
+        WHERE id = %(movie_id)s;
+        """
+        results = connectToMySQL(cls.my_db).query_db(query, data)
+        comments = []
+        for row in results:
+            one_movie = cls(row)
+            one_movie_comments = {
+                "id": row['id'],
+                "users_id": row['users_id'],
+                "movie_id": row['movie_id'],
+                "comment": row['comment'],
+                "created_at": row['created_at']
+            }
+            remark = comment.Comments(one_movie_comments)
+            one_movie.remark = remark
+            comments.append(one_movie)
+        return comments
 
 
     @classmethod

@@ -47,8 +47,9 @@ def update(movie_id):
         flash("Please log in or register")
         return redirect("/")
     movie=Movie.get_by_id(movie_id)
+    user = User.get_by_id(session["user_id"])
 
-    return render_template("update_movie.html", movie=movie)
+    return render_template("update_movie.html", movie=movie, user=user)
 
 
 @app.route("/movie/show_movie/<int:movie_id>")
