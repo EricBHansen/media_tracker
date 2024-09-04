@@ -57,11 +57,12 @@ def details_movie(movie_id):
     if not "user_id" in session:
         flash("Go register first")
         return redirect("/")
+    user = User.get_by_id(session["user_id"])
 
     # create variable to use to call on this html page in Jinja
 
     return render_template(
-        "details_movie.html", movie=Movie.join_tables_for_one_id(movie_id)
+        "details_movies.html", user=user, movie=Movie.join_tables_for_one_id(movie_id)
     )
 
 

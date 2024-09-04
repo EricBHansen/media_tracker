@@ -46,7 +46,7 @@
                         {% endwith %}
                         </ul>
                         <form action="/movie/update/{{movie.id}}" method="POST">
-                            <input type="hidden" value="{{movie.id}}" name="movie_id" id="movie_id">
+                            <input type="hidden" value="{{movie.id}}" name="id" id="id">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
                                 <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="title" name="title"  value="{{movie.title}}">

@@ -27,6 +27,7 @@ class Movie:
         # self.created_at = data["created_at"]
         # self.updated_at = data["updated_at"]
         self.owner_id = data["owner_id"]
+        self.chef = None
 
     @classmethod
     def create(cls, data):
@@ -75,8 +76,8 @@ class Movie:
                 "last_name": dict["last_name"],
                 "email": dict["email"],
                 "password": None,
-                "created_at": dict["users.created_at"],
-                "updated_at": dict["users.updated_at"],
+                "created_at": dict["created_at"],
+                "updated_at": dict["updated_at"],
             }
             publisher = user.User(user_data)
             single_movie.chef = publisher
@@ -106,7 +107,7 @@ class Movie:
         release_date=%(release_date)s,
         director=%(director)s,
         details=%(details)s
-        WHERE id =%(movie_id)s;
+        WHERE id =%(id)s;
         """
 
         movie = connectToMySQL(cls.my_db).query_db(query, movie_data)
