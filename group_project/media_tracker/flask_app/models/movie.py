@@ -18,6 +18,7 @@ class Movie:
 
     my_db = "media_tracker_schema"
 
+# details to input
     def __init__(self, data):
         self.id = data["id"]
         self.title = data["title"]
@@ -28,6 +29,7 @@ class Movie:
         # self.updated_at = data["updated_at"]
         self.owner_id = data["owner_id"]
 
+# CRUD Create method
     @classmethod
     def create(cls, data):
         query = """
@@ -42,6 +44,7 @@ class Movie:
         # this line returns the id of the new user.
         return connectToMySQL("media_tracker_schema").query_db(query, data)
 
+# CRUD Read All method
     @classmethod
     def get_all(cls):
         query = """
@@ -56,61 +59,35 @@ class Movie:
             movies.append(cls(movie))
         return movies
 
+# ???? Not working v need to look further
     @classmethod
-    def join_tables_for_one_id(cls, movie_id):
+    def movie_and_owner_details(cls, movie_id):
         query = """
-        SELECT *
-        FROM movie
-        JOIN users
-        ON users.id = movie.owner_id
-        WHERE movie.id=%(id)s;
+        SELECT * FROM movies
+        LEFT JOIN users
+        ON movies.owner_id = users.id
+        WHERE movie.id=%(movie_id)s;
         """
-        data = {"id": movie_id}
-        results = connectToMySQL(Movie.my_db).query_db(query, data)
-        single_movie = cls(results[0])
-        for dict in results:
-            user_data = {
-                "id": dict["users.id"],
-                "first_name": dict["first_name"],
-                "last_name": dict["last_name"],
-                "email": dict["email"],
-                "password": None,
-                "created_at": dict["users.created_at"],
-                "updated_at": dict["users.updated_at"],
-            }
-            publisher = user.User(user_data)
-            single_movie.chef = publisher
-        return single_movie
+        result = connectToMySQL(cls.my_db).query_db(query, {"movie_id": movie_id})
 
+        return result
+
+# CRUD Read One method
     @classmethod
-    def get_by_id(cls, data_id):
-        query = """
-        SELECT *
-        FROM movie
-        WHERE id = %(movie_id)s;
-        """
-        data = {"movie_id": data_id}
-        results = connectToMySQL(Movie.my_db).query_db(query, data)
-        print(results)
-        # if results is empty return none
-        if len(results) == 0:
+    def get_by_id(cls, movie_id):
+        query = """ SELECT * FROM movies WHERE id = %(movie_id)s;"""
+        result = connectToMySQL(cls.my_db).query_db(query, {"movie_id": movie_id})
+        if len(result) == 0:
             return None
-        return cls(results[0])
+        movie = cls(result[0])
+        return movie
 
     @classmethod
-    def update(cls, movie_data):
-        query = """
-        UPDATE movies
-        SET 
-        title=%(title)s,
-        release_date=%(details)s,
-        details=%(description)s,
-        WHERE id =%(id)s;
-        """
+    def update(cls, data):
+        query = """ UPDATE movies SET title=%(title)s, release_date=%(release_date)s, director=%(director)s, details=%(details)s WHERE id =%(id)s;"""
 
-        movie = connectToMySQL(cls.my_db).query_db(query, movie_data)
-        print(movie)
-        return movie
+        connectToMySQL(cls.my_db).query_db(query, data)
+        return
 
     @classmethod
     def delete(cls, movie_id):
@@ -157,4 +134,4 @@ class Movie:
             # date validation
 
         print(is_valid)
-        return is_valid
+        return is_valid 

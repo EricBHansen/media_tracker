@@ -57,25 +57,9 @@ def details_movie(movie_id):
         flash("Go register first")
         return redirect("/")
 
-    # create variable to use to call on this html page in Jinja
+    movie = Movie.get_by_id(movie_id)
 
-    return render_template(
-        "details_movie.html", movie=Movie.join_tables_for_one_id(movie_id)
-    )
-
-
-@app.route("/movie/details/<int:movie_id>")
-def details(movie_id):
-    if not "user_id" in session:
-        flash("Go register first")
-        return redirect("/")
-    #    # get_all method
-
-    # user = User.get_by_id("user_id")
-    query_results = Movie.get_by_id(movie_id)
-    # call the Movie class details = Movie.join_tables_for_one_id()
-    return render_template("details_movie.html", all_movies=query_results)
-
+    return render_template("details_movie.html", movie=movie)
 
 @app.route("/movie/edit/<int:movie_id>", methods=["POST"])
 def edit(movie_id):
@@ -83,18 +67,17 @@ def edit(movie_id):
     if not "user_id" in session:
         flash("Go register first")
         return redirect("/")
-    if Movie.is_valid(request.form):
-        flash("Updated!")
-        data = {
-            "movie_title": request.form["movie_title"],
-            "release_year": request.form["release_year"],
-            "description": request.form["description"],
-            "movie_id": movie_id,
-            "user_id": session["user_id"],
-        }
-        Movie.update(data)
-        return redirect("/dashboard")
-    return redirect(f"/update/{movie_id}")
+    #if Movie.is_valid(request.form):
+    #    flash("Updated!")
+    data = {
+        "id": movie_id,
+        "title": request.form["title"],
+        "release_date": request.form["release_date"],
+        "director": request.form["director"],
+        "details": request.form["details"],
+    }
+    Movie.update(data)
+    return redirect(f"/movie/show_movie/{movie_id}")
 
 
 # add post route to handle edit form submission
