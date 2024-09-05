@@ -49,6 +49,9 @@
             </div>
             <div class="card-footer text-start">
                 <h4>Comments</h4>
+                {% for comment in comments %}
+                    <p>{{comment}}</p>
+                {% endfor %}
                 <form class="form-horizontal" action="/comment/add" method="post">
                     <input type="hidden" value="{{movie.id}}" name="movie_id" id="movie_id">
                     <div class="form-group">

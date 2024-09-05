@@ -61,7 +61,7 @@ def details_movie(movie_id):
 
     movie = Movie.get_by_id(movie_id)
 
-    # comments = Comments.get_comments_by_movie(movie_id)
+    # comments = Comments.get_movie_by_comments(movie_id)
 
     return render_template("details_movies.html", user=user, movie=movie)
 
