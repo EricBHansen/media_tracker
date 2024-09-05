@@ -49,16 +49,33 @@
             </div>
             <div class="card-footer text-start">
                 <h4>Comments</h4>
-                {% for comment in comments %}
-                    <p>{{comment}}</p>
-                {% endfor %}
+                {% if comments != Null %}
+                    <div class="card">
+                        {% for comment in comments %}
+                        <div class="card border-dark my-2">
+                        <div class="card-header">
+                            {{comment.first_name}} said:
+                        </div>
+                        <div class="card-body">
+                            <h4>{{comment.comment}}</h4>
+                        </div>
+                        {% if comment.users_id == session.user_id %}
+                        <div class="card-footer">
+                            <span><a href="/comment/delete/{{comment.id}}" class="text-end">Delete</a></span>
+                            
+                        </div>
+                        {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 <form class="form-horizontal" action="/comment/add" method="post">
                     <input type="hidden" value="{{movie.id}}" name="movie_id" id="movie_id">
                     <div class="form-group">
                         <label class="control-label m-1" for="comment"></label>
                         <textarea class="form-control" aria-label="With textarea" name="comment" id="comment" placeholder="Add a comment"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary m-2">Submit</button>
                 </form>
             </div>
         </div>

@@ -22,9 +22,9 @@ class Comments:
 
     def __init__(self, data):
         self.id = data["id"]
-        self.comment = data["comment"]
-        self.movie_id = data["movie_id"]
         self.users_id = data["users_id"]
+        self.movie_id = data["movie_id"]
+        self.comment = data["comment"]
         self.created_at = data["created_at"]
         self.review = None
 
@@ -41,19 +41,25 @@ class Comments:
         # this line returns the id of the new user.
         return connectToMySQL(cls.my_db).query_db(query, data)
 
-    # @classmethod
-    # def get_movie_by_comments(cls, data):
-    #     query = """
-    #     SELECT * 
-    #     FROM movie_comments
-    #     WHERE id = %(movie_id)s;
-    #     """
-    #     results = connectToMySQL(cls.my_db).query_db(query, data)
-    #     movie_with_comments = []
-    #     for comment in results:
-    #         movie_with_comments.append(cls(comment))
-    #     return movie_with_comments
-
+    
+    @classmethod
+    def get_movie_by_comments(cls, data):
+        query = "SELECT * FROM movie_comments JOIN users ON users.id = users_id WHERE movie_id = %(movie_id)s;"
+        results = connectToMySQL(cls.my_db).query_db(query, {"movie_id": data})
+        movie_with_comments = []
+        for row in results:
+            one_comment = {
+                "id": row['id'],
+                "users_id": row['users_id'],
+                "movie_id": row['movie_id'],
+                "comment": row['comment'],
+                "created_at": row['created_at'],
+                "first_name": row['first_name']
+            }
+            movie_with_comments.append(one_comment)
+            print(one_comment)
+        # print(movie_with_comments)
+        return movie_with_comments
 
     @classmethod
     def get_all(cls):
@@ -120,16 +126,21 @@ class Comments:
     def get_by_id(cls, data_id):
         query = """
         SELECT *
-        FROM comments
+        FROM movie_comments
         WHERE id = %(comments_id)s;
         """
-        data = {"comments_id": data_id}
-        results = connectToMySQL(Comments.my_db).query_db(query, data)
-        print(results)
-        # if results is empty return none
-        if len(results) == 0:
-            return None
-        return cls(results[0])
+        results = connectToMySQL(Comments.my_db).query_db(query, {"comments_id": data_id})
+        for row in results:
+            data = {
+                "id": row['id'],
+                "users_id": row['users_id'],
+                "movie_id": row['movie_id']
+            }
+        print(cls(results))
+        # # if results is empty return none
+        # if len(results) == 0:
+        #     return None
+        return data
 
 
     @classmethod
@@ -151,7 +162,7 @@ class Comments:
     @classmethod
     def delete(cls, comments_id):
         query = """
-        DELETE FROM comments
+        DELETE FROM movie_comments
         WHERE id = %(id)s;
         """
         data = {"id": comments_id}
@@ -168,7 +179,7 @@ class Comments:
         elif len(form_data["comments"]) < 2:
             is_valid = False
             flash("3 Character min", "comments")
-            # decription validation
+            # description validation
 
         print(is_valid)
         return is_valid

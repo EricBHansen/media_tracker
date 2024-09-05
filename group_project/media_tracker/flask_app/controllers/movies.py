@@ -58,12 +58,9 @@ def details_movie(movie_id):
         flash("Go register first")
         return redirect("/")
     user = User.get_by_id(session["user_id"])
-
+    comments = Comments.get_movie_by_comments(movie_id)
     movie = Movie.get_by_id(movie_id)
-
-    # comments = Comments.get_movie_by_comments(movie_id)
-
-    return render_template("details_movies.html", user=user, movie=movie)
+    return render_template("details_movies.html", user=user, movie=movie, comments=comments)
 
 @app.route("/movie/edit/<int:movie_id>", methods=["POST"])
 def edit(movie_id):
@@ -99,9 +96,10 @@ def update_edit(movie_id):
     if Movie.is_valid(request.form):
         flash("Updated!")
     data = {
-        "movie_title": request.form["movie_title"],
-        "release_year": request.form["release_year"],
-        "description": request.form["description"],
+        "title": request.form["title"],
+        "release_date": request.form["release_date"],
+        "director": request.form["director"],
+        "details": request.form["details"],
         "id": movie_id,
         "user_id": session["user_id"],
     }

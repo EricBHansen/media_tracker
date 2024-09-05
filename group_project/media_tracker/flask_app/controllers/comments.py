@@ -26,3 +26,13 @@ def add_comment():
     movie_id = request.form['movie_id']
     Comments.create(data)
     return redirect(f'/movie/show_movie/{movie_id}')
+
+@app.route('/comment/delete/<int:id>')
+def delete_comment(id):
+    if "user_id" not in session:
+        return redirect("/")
+    Comments.delete(id)
+    # get_movie_id = Comments.get_by_id(id)
+    # movie_id = get_movie_id.movie_id
+    # print(movie_id)
+    return redirect('/dash')
