@@ -57,8 +57,6 @@ class Comments:
                 "first_name": row['first_name']
             }
             movie_with_comments.append(one_comment)
-            print(one_comment)
-        # print(movie_with_comments)
         return movie_with_comments
 
     @classmethod
@@ -136,7 +134,6 @@ class Comments:
                 "users_id": row['users_id'],
                 "movie_id": row['movie_id']
             }
-        print(cls(results))
         # # if results is empty return none
         # if len(results) == 0:
         #     return None
@@ -155,7 +152,6 @@ class Comments:
         """
 
         comments = connectToMySQL(Comments.my_db).query_db(query, comments_data)
-        print(comments)
         return comments
     
 
@@ -181,5 +177,4 @@ class Comments:
             flash("3 Character min", "comments")
             # description validation
 
-        print(is_valid)
         return is_valid

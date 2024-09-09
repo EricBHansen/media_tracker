@@ -16,6 +16,13 @@ from flask_app.models.comment import Comments
 # session["id_user"] = user_in_db.id
 # dashboard for /movie = belt exam
 
+@app.route('/test')
+def test():
+    user = User.get_by_id(session["user_id"])
+    movie_id = 2
+    movie = Movie.movie_and_owner_details(movie_id)
+    return render_template("test.html", movie=movie, user=user)
+
 @app.route("/add_movie")
 def movie_form():
     user = User.get_by_id(session["user_id"])
@@ -59,12 +66,12 @@ def details_movie(movie_id):
         return redirect("/")
     user = User.get_by_id(session["user_id"])
     comments = Comments.get_movie_by_comments(movie_id)
-    movie = Movie.get_by_id(movie_id)
+    movie = Movie.movie_and_owner_details(movie_id)
+    session['current_movie'] = movie_id
     return render_template("details_movies.html", user=user, movie=movie, comments=comments)
 
 @app.route("/movie/edit/<int:movie_id>", methods=["POST"])
 def edit(movie_id):
-    print(request.form)
     if not "user_id" in session:
         flash("Go register first")
         return redirect("/")
@@ -104,7 +111,6 @@ def update_edit(movie_id):
         "user_id": session["user_id"],
     }
     Movie.update(data)
-    print(request.form)
     return redirect("/dash")
 
 

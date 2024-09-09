@@ -59,18 +59,18 @@ class Movie:
             movies.append(cls(movie))
         return movies
 
-# ???? Not working v need to look further
+
     @classmethod
     def movie_and_owner_details(cls, movie_id):
         query = """
         SELECT * FROM movies
         LEFT JOIN users
         ON movies.owner_id = users.id
-        WHERE movie.id=%(movie_id)s;
+        WHERE movies.id=%(movie_id)s;
         """
         result = connectToMySQL(cls.my_db).query_db(query, {"movie_id": movie_id})
-
-        return result
+        movie = (result[0])
+        return movie
 
 # CRUD Read One method
     @classmethod
