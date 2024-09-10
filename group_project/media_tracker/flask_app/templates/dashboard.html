@@ -31,6 +31,20 @@
             <!-- user list -->
             <div>
                 <h1>All Users</h1>
+                <div class="d-flex" style="flex-wrap: wrap;">
+                    {% for user in users %}
+                    <ul>
+                        <li class="list-group-item">
+                            <div class="card text-center" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h3>{{user.first_name}} {{user.last_name}}</h3>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                    {% endfor %}
+                </div>
             </div>
             <!-- movies list -->
             <div>

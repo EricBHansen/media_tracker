@@ -74,7 +74,6 @@ def details_movie(movie_id):
     poster_id = temp1.replace(' ', '+')
     movie_data = requests.get(f"http://www.omdbapi.com/?t={poster_id}&apikey={os.environ.get("OMDB_KEY")}")
     poster = (movie_data.json()['Poster'])
-    print(movie_data.json()['Poster'])
     session['current_movie'] = movie_id
     return render_template("details_movies.html", user=user, movie=movie, comments=comments, poster=poster)
 

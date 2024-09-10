@@ -63,4 +63,4 @@ def success():
     users=User.get_all()
     movies=Movie.get_all()
 
-    return render_template('success.html', user=user, users=users, movies=movies)
+    return render_template('dashboard.html', user=user, users=users, movies=movies)
