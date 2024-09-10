@@ -72,14 +72,11 @@ def details_movie(movie_id):
     movie = Movie.movie_and_owner_details(movie_id)
     temp1 = (movie['title'])
     poster_id = temp1.replace(' ', '+')
-    print(poster_id)
-    print(os.environ.get("OMDB_KEY"))
-    print(os.getenv("OMDB_KEY"))
-    print(f"http://www.omdbapi.com/?t={poster_id}&apikey={os.environ.get("OMDB_KEY")}")
-    poster = requests.get(f"http://www.omdbapi.com/?t={poster_id}&apikey={os.environ.get("OMDB_KEY")}")
-    print(poster.status_code)
+    movie_data = requests.get(f"http://www.omdbapi.com/?t={poster_id}&apikey={os.environ.get("OMDB_KEY")}")
+    poster = (movie_data.json()['Poster'])
+    print(movie_data.json()['Poster'])
     session['current_movie'] = movie_id
-    return render_template("details_movies.html", user=user, movie=movie, comments=comments)
+    return render_template("details_movies.html", user=user, movie=movie, comments=comments, poster=poster)
 
 @app.route("/movie/edit/<int:movie_id>", methods=["POST"])
 def edit(movie_id):
