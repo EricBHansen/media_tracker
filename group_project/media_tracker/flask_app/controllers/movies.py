@@ -6,12 +6,15 @@ from flask import (
     flash,
     render_template,
 )
-
+import os
+import requests
+from dotenv import load_dotenv, dotenv_values 
 from flask_app.models.movie import Movie
 from flask_app.models.user import User
 from flask_app.models.comment import Comments
 #from flask_app.models.favorite import Favorites
 
+load_dotenv() 
 
 # session["id_user"] = user_in_db.id
 # dashboard for /movie = belt exam
@@ -67,6 +70,14 @@ def details_movie(movie_id):
     user = User.get_by_id(session["user_id"])
     comments = Comments.get_movie_by_comments(movie_id)
     movie = Movie.movie_and_owner_details(movie_id)
+    temp1 = (movie['title'])
+    poster_id = temp1.replace(' ', '+')
+    print(poster_id)
+    print(os.environ.get("OMDB_KEY"))
+    print(os.getenv("OMDB_KEY"))
+    print(f"http://www.omdbapi.com/?t={poster_id}&apikey={os.environ.get("OMDB_KEY")}")
+    poster = requests.get(f"http://www.omdbapi.com/?t={poster_id}&apikey={os.environ.get("OMDB_KEY")}")
+    print(poster.status_code)
     session['current_movie'] = movie_id
     return render_template("details_movies.html", user=user, movie=movie, comments=comments)
 
