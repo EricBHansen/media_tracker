@@ -21,10 +21,14 @@ load_dotenv()
 
 @app.route('/test')
 def test():
-    user = User.get_by_id(session["user_id"])
-    movie_id = 2
-    movie = Movie.movie_and_owner_details(movie_id)
-    return render_template("test.html", movie=movie, user=user)
+    if "user_id" not in session:
+        return redirect('/')
+    
+    user=User.get_by_id(session["user_id"])
+    users=User.get_all()
+    movies=Movie.get_all()
+
+    return render_template('dashboard.html', user=user, users=users, movies=movies)
 
 @app.route("/add_movie")
 def movie_form():
