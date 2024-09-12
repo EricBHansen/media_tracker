@@ -12,6 +12,8 @@
 <body>
     <!-- page container -->
     <div class="d-flex">
+        <div>
+            
         <!-- side navbar -->
         <nav class="navbar flex-column bg-body-tertiary p-2" style="height: 100vh;">
             <div class="container-fluid flex-column"> 
@@ -25,8 +27,10 @@
         </nav>
         <!-- main content container -->
         <div>
+            
             <div>
                 <h1>Welcome to your Film Library, {{user.first_name}} {{user.last_name}}</h1>
+                
             </div>
             <!-- user list -->
             <div>
@@ -49,7 +53,7 @@
             <!-- movies list -->
             <div>
                 <h1>All Movies</h1>
-
+                
                 <div class="d-flex" style="flex-wrap: wrap;">
                 {% for movie in movies %}
                     <ul>
@@ -71,6 +75,7 @@
                 </div>
 
             </div>
+        </div>
         </div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
